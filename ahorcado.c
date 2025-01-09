@@ -15,75 +15,77 @@ char letrasAdivinadas[30];	//Cadena para mostrar las letras adivinadas
 
 const char* ElegirPalabra(int num);
 int LetraCorrecta(char pal[20], char let);
-void MostrarInterfaz(char palabra[30], char letrasAdivinadas[30], int vidas);
 void ActualizarPalabra(char pal[30], char let, char letrasAdivinadas[30]);
-void OpcionMenu(int *menu);
-void OpcionJugar(int *jugar);
+
+//Validación
+void ValidarMenu(int *menu);
+void ValidarJugar(int *jugar);
+
+//Interfaz
+void MostrarInterfaz(char palabra[30], char letrasAdivinadas[30], int vidas);
+void continuar();
+void menuPrincipal();
+void menuJugar();
 
 int main(){
+	system("clear");
 	srand(time(NULL));						//Para cambiar la semilla que genera numeros aleatorios y que estos no se repitan
 	menu = 0;
 	while(menu != 2){
-		printf("\n\n");
-		printf("/*||AHORCADO||*\\");
-		printf("\n");
-		printf("1 - Jugar");
-		printf("\n");
-		printf("2 - Salir");
-		printf("\n");
-		printf("-> ");
-		OpcionMenu(&menu);
+		menuPrincipal();
+		ValidarMenu(&menu);
 		printf("\n");
 		switch (menu){
 			case 1: 
+				system("clear");
 				strcpy(palabra, ElegirPalabra((rand() % 20)+1));			//Se hace con mod 11 +1 para que devuelva un numero del 1 al 10
 				/*printf("%s", palabra);*/		//Para facilitar la prueba se muestra la palabra a adivinar
 				memset(letrasAdivinadas, '\0', sizeof(letrasAdivinadas));	//Llena la cadena letrasAdivinadas con '\0', para reiniciar las letras adivinadas
 				vidas = 5;
-				derrota = 0;						//cuando derrota está en 0, el juego está en curso, cuando está en uno el usuario perdió y cuando está en 2 el usuario ganó
+				derrota = 0;						//cuando derrota está en 0, el juego está en curso, cuando está en 1 el usuario perdió y cuando está en 2 el usuario ganó
 				while(derrota == 0){
 					MostrarInterfaz(palabra, letrasAdivinadas, vidas);		//Se muestran las vidas y la palabra
-					printf("\n\n");
-					printf("1- Arriesgar palabra\n2- Tirar letra\n");
-					printf("->");
-					OpcionJugar(&jugar);
+					menuJugar();
+					ValidarJugar(&jugar);
 					switch(jugar){
 						case 1:
 							printf("Palabra: ");
 							scanf("%19s", palArriesgar);					//Se pone "%19s" para evitar poner una palabra demasiado larga
-							if(strcmp(palArriesgar, palabra) == 0){			//Si se adivinó la palabra, se gana 
+							if(strcmp(palArriesgar, palabra) == 0)			//Si se adivinó la palabra, se gana 
 								derrota = 2;								//y se cambia derrota a 2
-							}else{											//Sino se pierde y
+							else											//Sino se pierde y
 								derrota = 1;								//se cambia derrota a 1
-							}
 							break;
 						case 2:
 							printf("Letra: ");
 							scanf(" %c", &letra);
-							if(isupper(letra)){								//para evitar problemas, si la letra ingresada es
+							if(isupper(letra))								//para evitar problemas, si la letra ingresada es
 								letra = tolower(letra);						//mayúscula, la convertimos a minuscula
-							}
 							if(LetraCorrecta(palabra, letra)){							//Si la letra ingresada es correcta
 								printf("Letra Correcta!!\n");
 								ActualizarPalabra(palabra, letra, letrasAdivinadas);	//Se actualizan las letras adivinadas
-								if(strcmp(letrasAdivinadas, palabra) == 0){				//Si se completó la palabra
+								if(strcmp(letrasAdivinadas, palabra) == 0)				//Si se completó la palabra
 									derrota = 2;										//se gana y se cambia derrota a 2
-								}
 							}else{														//Si la letra es incorrecta
 								vidas--;												//Se resta una vida
-								printf("¡Letra incorrecta, perdiste una vida!");
-								if(vidas <= 0){											//Si se terminan las vidas se pierde
+								printf("\n¡Letra incorrecta, perdiste una vida!\n");
+								if(vidas <= 0)											//Si se terminan las vidas se pierde
 									derrota = 1;										//y derrota se cambia a 1
-								}
 							}
+							continuar();
+							system("clear");
 							break;
 					}
 				}
 				if(derrota == 1){
+					system("clear");
 					printf("\n\n¡Perdiste! :(\n\n");
 					printf("La palabra era %s\n\n", palabra);
+					continuar();
 				}else{
+					system("clear");
 					printf("\n\n¡Ganaste! :)\n\n");
+					continuar();
 				}
 				break;
 			case 2:
@@ -142,9 +144,8 @@ const char* ElegirPalabra(int num){			//Definimos asi una función que devuelve 
 int LetraCorrecta(char pal[20], char let){
 	int i;
 	for(i=0; i < strlen(pal); i++){
-		if(pal[i] == let){
+		if(pal[i] == let)
 			return 1;
-		}
 	}
 	return 0;
 }
@@ -154,7 +155,6 @@ void MostrarInterfaz(char palabra[30], char letrasAdivinadas[30], int vidas){
 	int i;
 	int longitud;
 	longitud = strlen(palabra);
-	printf("\n==============================================");
 	printf("\n");
 	printf("Vidas restantes: %d", vidas);
 	printf("\n");
@@ -181,7 +181,7 @@ void ActualizarPalabra(char pal[30], char let, char letrasAdivinadas[30]){
 }
 
 //valida el ingreso de una opcion en el menu
-void OpcionMenu(int *menu){
+void ValidarMenu(int *menu){
 	do{
 		scanf("%d", menu);
 		if((*menu != 1)&&(*menu != 2)){
@@ -192,7 +192,7 @@ void OpcionMenu(int *menu){
 }
 
 //valida el ingreso de una opcion en el menu jugar
-void OpcionJugar(int *jugar){
+void ValidarJugar(int *jugar){
 	do{
 		scanf("%d", jugar);
 		if((*jugar != 1)&&(*jugar != 2)){
@@ -200,4 +200,30 @@ void OpcionJugar(int *jugar){
 			printf("->");
 		}
 	}while((*jugar != 1)&&(*jugar != 2));
+}
+
+//Imprime un cartel y no avanza hasta que el usuario presione enter
+void continuar(){
+	printf("Presiona 'Enter' para continuar");
+	getchar();		//limpia el buffer 
+	getchar();		//Espera a que el usuario presione enter
+}
+
+void menuPrincipal(){
+	system("clear");
+	printf("\n");
+	printf("/*||AHORCADO||*\\");
+	printf("\n");
+	printf("1 - Jugar");
+	printf("\n");
+	printf("2 - Salir");
+	printf("\n");
+	printf("-> ");
+}
+
+void menuJugar(){
+	printf("\n\n");
+	printf("1- Arriesgar palabra\n");
+	printf("2- Tirar letra\n");
+	printf("->");
 }

@@ -1,0 +1,141 @@
+Análisis - Juego ahorcado
+
+Tendría que tener un menú con una opción para empezar a jugar y otra opción para salir
+Cuando se elige la opción jugar mostraría una línea de puntos con la cantidad de letras, la cantidad de letras en número y las vidas que quedan
+Entonces se podría elegir entre arriesgarse o tirar una letra
+Si se elige tirar una letra, se pide una entrada, y el programa busca las coincidencias, si no hay ninguna se resta una vida, y si no se revelan las letras de la palabra
+Si se elige arriesgarse se pide una palabra, si se acierta se muestra un mensaje de victoria y se vuelve a la pantalla principal, si no se acierta, se muestra un mensaje de derrota y se vuelve a la pantalla principal
+Si se siguien pidiendo letras y se terminan las vidas, se muestra un mensaje de derrota y se vuelve a la pantalla principal
+
+Palabras: 
+elefante
+llanura
+felicidad
+plaza
+amistad
+bicicleta
+restaurante
+arcoiris
+limpieza 
+viaje
+
+Algoritmo
+Léxico local
+	menu E Z
+	jugar E Z
+	vidas E Z
+	palabraCompleta E Lógico
+	derrota E Z
+	palabra E Cadena
+	letra E Caracter
+	palArriesgar E Cadena
+	TPalabras = (elefante, llanura, felicidad, plaza, amistad, bicicleta, restaurante, arcoiris, limpieza, viaje)
+	msgPrincipial, numInval, msgJugar E Cadena
+	Función ElegirPalabra( Dato num E Z) → Cadena
+	Acción MostrarInterfaz()
+	Acción MensajeVictoria()
+	Acción MensajeDerrota()
+	Función LetraCorrecta( Dato pal E Cadena, let E Caracter) → Lógico 
+	Acción ActualizarPalabra()
+Inicio
+	menu ← 0
+	numInval ← "Ingrese una opción válida"
+	Mientras (menu != 2) Hacer
+		msgPrincipal ← "Ingrese una opción, 1 jugar, 2 salir"
+		Salida: msgPrincipal
+		Entrada: menu
+		Segun
+			menu = 1: palabra ← ElegirPalabra(random)
+					  msgJugar ← "Opciones: 1-Arriesgar 2-Tirar letra"
+					  vidas ← 5
+					  derrota ← 0
+					  Mientras (derrota = 0) Hacer
+						  MostrarInterfaz(palabra)
+						  Salida: msgJugar
+						  Entrada: jugar
+						  Segun
+							 jugar = 1: msg ← "Palabra: "
+										Salida: msg
+										Entrada: palArriesgar
+										Si (palArriesgar = palabra) Entonces
+											derrota ← 2
+										Sino
+											derrota ← 1
+										Fsi
+							 jugar = 2: msg ← "Letra: "
+										Salida: msg
+										Entrada: letra
+										Si (LetraCorrecta(palabra, letra)) Entonces
+											msg ← "Letra correcta!"
+											Salida: msg
+											ActualizarPalabra()
+											Si (palabraCompleta = 1) Entonces
+												derrota ← 2
+											Fsi
+										Sino
+											vidas = vidas - 1
+											msg ← "Letra incorrecta, te quedan vidas vidas"
+											Salida: msg
+											Si (vidas <= 0) Entonces
+												derrota ← 1
+											Fsi
+										Fsi
+							 otros: Salida: numInval
+						  Fsegun
+					  Fmientras
+					  Si (derrota = 1) Entonces
+						MensajeDerrota()
+					  Sino
+						MensajeVictoria()
+					  Fsi
+			menu = 2: msg ← "Saliendo..."
+					  Salida: msg
+			Otros: Salida: numInval
+		Fsegun
+	Fmientras	
+Fin
+Acciones
+
+Función ElegirPalabra( Dato num E Z) → Cadena
+	Segun 
+		num = 1: ← "elefante"
+		num = 2: ← "llanura"
+		num = 3: ← "felicidad"
+		num = 4: ← "plaza"
+		num = 5: ← "amistad"
+		num = 6: ← "bicicleta"
+		num = 7: ← "restaurante"
+		num = 8: ← "arcoiris"
+		num = 9: ← "limpieza"
+		num = 10: ← "viaje"
+	fsegun
+Ffunción
+
+Acción MostrarInterfaz( Dato pal E Cadena )
+Léxico local
+	msg E Cadena
+Inicio
+	
+Facción
+
+Acción MensajeVictoria()
+Léxico local
+	msg E Cadena
+Inicio
+	msg ← "Ganaste!"
+	Salida: msg
+Facción
+
+Acción MensajeDerrota()
+Léxico local
+	msg E Cadena
+Inicio
+	msg ← "Perdiste!"
+	Salida: msg
+Facción
+
+Función LetraCorrecta( Dato pal E Cadena, let E Caracter) → Lógico
+Facción
+
+Acción ActualizarPalabra()
+Facción 
