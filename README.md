@@ -5,6 +5,7 @@ Un juego del ahorcado desarrollado mientras estudiaba para Introducción a la Al
 El juego consiste en adivinar una palabra dada su cantidad de letras. Para esto podemos "tirar" una letra o "arriesgar" intentando adivinar la palabra. Al tirar una letra, si la palabra contiene la letra que tiramos se revela su posición en ella, y si no la tiene perdemos una vida. Al perder las 5 vidas que tenemos o al arriesgar la palabra y fallar, perdimos el juego. Si adivinamos la palabra al arriesgar o tiramos correctamente todas sus letras, ganamos el juego.
 ## Retomando el proyecto
 La idea de retomar el proyecto es, en primer lugar que quede registrado y guardado en gitHub en lugar de estar tirado en mi compu y que eventualmente se pierda. En segundo lugar, es un proyecto ya iniciado que puedo usar para aplicar cosas que fui aprendiendo, de manera rápida y sin tener que arrancar algo de cero. 
+
 ---
 ### v1.0 
 [^1]
