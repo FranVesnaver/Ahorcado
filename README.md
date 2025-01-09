@@ -15,4 +15,10 @@ La idea de retomar el proyecto es, en primer lugar que quede registrado y guarda
 - Se hizo una reestructuración del código para organizarlo mejor
 - Ahora el juego va limpiando la consola a medida que se ejecuta
 
+### v1.0.2
+- Se refactorizó el código para cambiar la forma en que se eligen las palabras de forma aleatoria
+- Ahora se utiliza un arreglo predefinido que contiene las cadenas con las palabras en lugar de una función con un switch
+- De esta forma tenemos un código más limpio, más eficiente, y una mejor forma de agregar palabras al juego
+- Para eso simplemente agregamos la nueva palabra al arreglo e incrementamos la variable 'cant'
+
 [^1]: **Nota:** Arranco desde la v1.0 porque el juego técnicamente está terminado, es como dejé lo dejé en Enero de 2024

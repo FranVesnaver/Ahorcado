@@ -13,7 +13,13 @@ char letra;					//Letra a tirar
 char palArriesgar[20];		//Palabra para arriesgar
 char letrasAdivinadas[30];	//Cadena para mostrar las letras adivinadas
 
-const char* ElegirPalabra(int num);
+//Arreglo con las palabras aleatorias, 'cant' es la cantidad de elementos en el arreglo
+char *arregloPalabras[] = {"elefante", "llanura", "felicidad", "plaza", "amistad", "bicicleta", "restaurante", "arcoiris",
+							"limpieza", "viaje", "perro", "flauta", "sacacorhco", "manopla", "canino", "mascota", "pendorcho",
+							"heladera", "carnaval"};
+int cant = 19;
+
+//Funcionalidad
 int LetraCorrecta(char pal[20], char let);
 void ActualizarPalabra(char pal[30], char let, char letrasAdivinadas[30]);
 
@@ -38,7 +44,7 @@ int main(){
 		switch (menu){
 			case 1: 
 				system("clear");
-				strcpy(palabra, ElegirPalabra((rand() % 20)+1));			//Se hace con mod 11 +1 para que devuelva un numero del 1 al 10
+				strcpy(palabra, arregloPalabras[(rand() % cant)]);			//Con mod
 				/*printf("%s", palabra);*/		//Para facilitar la prueba se muestra la palabra a adivinar
 				memset(letrasAdivinadas, '\0', sizeof(letrasAdivinadas));	//Llena la cadena letrasAdivinadas con '\0', para reiniciar las letras adivinadas
 				vidas = 5;
@@ -95,51 +101,6 @@ int main(){
 	}
 }
 
-//Esta función devuelve una palabra segun el numero que se le pase, que va a ser aleatorio
-const char* ElegirPalabra(int num){			//Definimos asi una función que devuelve una cadena
-	switch (num){
-		case 1:
-			return "elefante";
-		case 2:
-			return "llanura";
-		case 3:
-			return "felicidad";
-		case 4:
-			return "plaza";
-		case 5:
-			return "amistad";
-		case 6:
-			return "bicicleta";
-		case 7:
-			return "restaurante";
-		case 8:
-			return "arcoiris";
-		case 9:
-			return "limpieza";
-		case 10:
-			return "viaje";
-		case 12:
-			return "perro";
-		case 13:
-			return "flauta";
-		case 14:
-			return "sacacorcho";
-		case 15:
-			return "manopla";
-		case 16:
-			return "canino";
-		case 17:
-			return "mascotas";
-		case 18:
-			return "pendorcho";
-		case 19:
-			return "heladera";
-		case 20:
-			return "carnaval";
-		default:
-	}
-}
-
 //devuelve 1 si la letra que se le pasa está en la palabra
 int LetraCorrecta(char pal[20], char let){
 	int i;
@@ -148,24 +109,6 @@ int LetraCorrecta(char pal[20], char let){
 			return 1;
 	}
 	return 0;
-}
-
-//se encarga de mostrar las vidas restantes y las letras adivinadas
-void MostrarInterfaz(char palabra[30], char letrasAdivinadas[30], int vidas){
-	int i;
-	int longitud;
-	longitud = strlen(palabra);
-	printf("\n");
-	printf("Vidas restantes: %d", vidas);
-	printf("\n");
-	printf("Palabra: ");
-	for(i=0; i < longitud; i++){
-		if(letrasAdivinadas[i] == '\0'){				//letrasAdivinadas se va rellenando a medida que se adivinan letras
-			printf("_");								//por lo que tiene un '\0' donde hay una letra sin adivinar
-		}else{											//Entonces, cuando detecta un '\0' imprime un guion bajo 
-			printf("%c", letrasAdivinadas[i]);			//de lo contrario imprime una letra
-		}
-	}
 }
 
 //va rellenando letrasAdivinadas, que lleva las letras adivinadas hasta el momento
@@ -200,6 +143,24 @@ void ValidarJugar(int *jugar){
 			printf("->");
 		}
 	}while((*jugar != 1)&&(*jugar != 2));
+}
+
+//se encarga de mostrar las vidas restantes y las letras adivinadas
+void MostrarInterfaz(char palabra[30], char letrasAdivinadas[30], int vidas){
+	int i;
+	int longitud;
+	longitud = strlen(palabra);
+	printf("\n");
+	printf("Vidas restantes: %d", vidas);
+	printf("\n");
+	printf("Palabra: ");
+	for(i=0; i < longitud; i++){
+		if(letrasAdivinadas[i] == '\0'){				//letrasAdivinadas se va rellenando a medida que se adivinan letras
+			printf("_");								//por lo que tiene un '\0' donde hay una letra sin adivinar
+		}else{											//Entonces, cuando detecta un '\0' imprime un guion bajo 
+			printf("%c", letrasAdivinadas[i]);			//de lo contrario imprime una letra
+		}
+	}
 }
 
 //Imprime un cartel y no avanza hasta que el usuario presione enter
