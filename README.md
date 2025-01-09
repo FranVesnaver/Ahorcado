@@ -7,8 +7,7 @@ El juego consiste en adivinar una palabra dada su cantidad de letras. Para esto 
 La idea de retomar el proyecto es, en primer lugar que quede registrado y guardado en gitHub en lugar de estar tirado en mi compu y que eventualmente se pierda. En segundo lugar, es un proyecto ya iniciado que puedo usar para aplicar cosas que fui aprendiendo, de manera rápida y sin tener que arrancar algo de cero. 
 
 ---
-### v1.0 
-[^1]
+### v1.0 [^1]
 - El juego está totalmente funcional y listo para jugarlo en la consola
 - Tiene 20 palabras pero organizadas de una forma horrible, la idea es mejorar esto guardandolas en un arreglo
 
